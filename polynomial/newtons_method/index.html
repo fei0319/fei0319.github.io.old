@@ -1,0 +1,1958 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.3">
+    
+    
+      
+        <title>多项式中的 Newton's Method - 非的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1655a90d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="indigo">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#newtons-method" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="非的博客" class="md-header__button md-logo" aria-label="非的博客">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            非的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              多项式中的 Newton's Method
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        主页
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../problem/atcoder/arc114/d/" class="md-tabs__link">
+        做题记录
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../thought/dogma/" class="md-tabs__link">
+        随记
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../travel/csp2020/" class="md-tabs__link">
+        游记
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../templateset/" class="md-tabs__link">
+        模板
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../discrete_mathematics/stirling/" class="md-tabs__link">
+        离散数学
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../linear_algebra/det/" class="md-tabs__link">
+        线性代数
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../generating_function/" class="md-tabs__link md-tabs__link--active">
+        多项式和生成函数
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../graph/dsu_on_tree/" class="md-tabs__link">
+        图论
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../number_theory/euler/" class="md-tabs__link">
+        数论
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../data_structure/binary_lift_BIT/" class="md-tabs__link">
+        数据结构
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../string/lyndon/" class="md-tabs__link">
+        字符串
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="非的博客" class="md-nav__button md-logo" aria-label="非的博客">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    非的博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        主页
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="主页" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          主页
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        欢迎
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../update/" class="md-nav__link">
+        更新
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        做题记录
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="做题记录" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          做题记录
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      <label class="md-nav__link" for="__nav_2_1">
+        专项练习
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="专项练习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          专项练习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_1" type="checkbox" id="__nav_2_1_1" >
+      
+      <label class="md-nav__link" for="__nav_2_1_1">
+        ARC.114
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ARC.114" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          ARC.114
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc114/d/" class="md-nav__link">
+        D - Moving Pieces on Line
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc114/e/" class="md-nav__link">
+        E - Paper Cutting 2
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc114/f/" class="md-nav__link">
+        F - Permutation Division
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_2" type="checkbox" id="__nav_2_1_2" >
+      
+      <label class="md-nav__link" for="__nav_2_1_2">
+        ARC.115
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ARC.115" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          ARC.115
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/a/" class="md-nav__link">
+        A - Two Choices
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/b/" class="md-nav__link">
+        B - Plus Matrix
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/c/" class="md-nav__link">
+        C - N Coloring
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/d/" class="md-nav__link">
+        D - Odd Degree
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/e/" class="md-nav__link">
+        E - LEQ and NEQ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/f/" class="md-nav__link">
+        F - Migration
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      <label class="md-nav__link" for="__nav_2_2">
+        常规练习
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="常规练习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          常规练习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" type="checkbox" id="__nav_2_2_1" >
+      
+      <label class="md-nav__link" for="__nav_2_2_1">
+        March.2021
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="March.2021" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          March.2021
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj32/" class="md-nav__link">
+        跳蚤公路
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj33/" class="md-nav__link">
+        树上 GCD
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj429/" class="md-nav__link">
+        串串划分
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj596/" class="md-nav__link">
+        三维立体混元劲
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2242/" class="md-nav__link">
+        异或
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2007/" class="md-nav__link">
+        Light
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/bzoj1471/" class="md-nav__link">
+        不相交路径
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/bzoj3201/" class="md-nav__link">
+        战斗力
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/tc13460/" class="md-nav__link">
+        Frozen Standing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2010/" class="md-nav__link">
+        黑白沙漠
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2011/" class="md-nav__link">
+        荒野聚餐
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2013/" class="md-nav__link">
+        锁
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2017/" class="md-nav__link">
+        装备合成
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2016/" class="md-nav__link">
+        黑心工厂
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2245/" class="md-nav__link">
+        Company
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2030/" class="md-nav__link">
+        数学题
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2034/" class="md-nav__link">
+        歪比歪比
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        随记
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="随记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          随记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thought/dogma/" class="md-nav__link">
+        我的代码规范
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thought/trit/" class="md-nav__link">
+        三分法的适用范围
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        游记
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="游记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          游记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../travel/csp2020/" class="md-nav__link">
+        CSP2020 爆零记
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../travel/noip2020/" class="md-nav__link">
+        NOIP2020 爆炸记
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../travel/wc2021/" class="md-nav__link">
+        WC2021 打铁记
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        模板
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="模板" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          模板
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templateset/" class="md-nav__link">
+        模板大全
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templateset/string/" class="md-nav__link">
+        字符串
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        离散数学
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="离散数学" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          离散数学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../discrete_mathematics/stirling/" class="md-nav__link">
+        斯特林数与上升幂、下降幂
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        线性代数
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="线性代数" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          线性代数
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linear_algebra/det/" class="md-nav__link">
+        关于行列式计算的详细证明
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linear_algebra/cross_product/" class="md-nav__link">
+        浅谈向量积
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+      
+      <label class="md-nav__link" for="__nav_8">
+        多项式和生成函数
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="多项式和生成函数" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          多项式和生成函数
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generating_function/" class="md-nav__link">
+        简单介绍生成函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../polylog/" class="md-nav__link">
+        多项式对数函数、指数函数和欧拉变换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../polyinv/" class="md-nav__link">
+        多项式的逆
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          多项式中的 Newton's Method
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        多项式中的 Newton's Method
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    泰勒级数和麦克劳林级数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_1" class="md-nav__link">
+    一般的 Newton's Method
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method-methodology" class="md-nav__link">
+    Newton's Method 在多项式中的 Methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_2" class="md-nav__link">
+    Newton's Method 求多项式的逆
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_3" class="md-nav__link">
+    Newton's Method 求多项式平方根
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_4" class="md-nav__link">
+    Newton's Method 求多项式指数函数
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arbitrary_modulo/" class="md-nav__link">
+        任意模数多项式乘法
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
+        图论
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="图论" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          图论
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/dsu_on_tree/" class="md-nav__link">
+        静态链分治和树上启发式合并
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      <label class="md-nav__link" for="__nav_10">
+        数论
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="数论" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          数论
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../number_theory/euler/" class="md-nav__link">
+        欧拉函数和欧拉定理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../number_theory/number_theoretic_function/" class="md-nav__link">
+        一些数论函数及其运算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../number_theory/exgcd/" class="md-nav__link">
+        扩展欧几里得算法得出的解的绝对值上界
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      <label class="md-nav__link" for="__nav_11">
+        数据结构
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="数据结构" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_structure/binary_lift_BIT/" class="md-nav__link">
+        树状数组倍增
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_structure/sgt_merge/" class="md-nav__link">
+        线段树合并
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      <label class="md-nav__link" for="__nav_12">
+        字符串
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="字符串" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          字符串
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../string/lyndon/" class="md-nav__link">
+        Lyndon 串和 Lyndon 分解
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    泰勒级数和麦克劳林级数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_1" class="md-nav__link">
+    一般的 Newton's Method
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method-methodology" class="md-nav__link">
+    Newton's Method 在多项式中的 Methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_2" class="md-nav__link">
+    Newton's Method 求多项式的逆
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_3" class="md-nav__link">
+    Newton's Method 求多项式平方根
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtons-method_4" class="md-nav__link">
+    Newton's Method 求多项式指数函数
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="newtons-method">多项式中的 Newton's Method<a class="headerlink" href="#newtons-method" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Newton's Method 是牛顿提出的一种将非线性方程线性化的近似方法。它也可以运用在多项式中，求关于多项式的非线性方程在模意义下的解。</p>
+</blockquote>
+<p>要学习 Newton's Method，得先了解泰勒级数。</p>
+<h2 id="_1">泰勒级数和麦克劳林级数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>泰勒级数用无限项连加式来表示函数。一般地，对于一个光滑函数 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>，有</p>
+<div>
+<div class="MathJax_Preview">
+f(x)=\sum\limits_{n=0}^{+\infty}\dfrac{f ^ {(n)}(a)} {i!}(x-a)^n
+</div>
+<script type="math/tex; mode=display">
+f(x)=\sum\limits_{n=0}^{+\infty}\dfrac{f ^ {(n)}(a)} {i!}(x-a)^n
+</script>
+</div>
+<p>这个等式被称为 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 在 <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> 处的泰勒展开式；等号右边的式子被称为 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 在 <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> 处的泰勒级数。在 <span><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span> 处的泰勒展开式和泰勒级数也被称为麦克劳林展开式和麦克劳林级数。下面给出了一些常用的麦克劳林级数，有的在生成函数中常用：</p>
+<div>
+<div class="MathJax_Preview">
+(1-x)^{-1}=\sum\limits_{n=0}^{+\infty}x^n\\
+(1-x)^{-m}=\sum\limits_{n=0}^{+\infty}\binom{n+m-1}{n}x^n\\
+(1+x)^{m}=\sum\limits_{n=0}^{+\infty}\binom{m}{n}x^n\\
+\ln(1-x)=-\sum\limits_{n=1}^{+\infty}\dfrac{x^n}{n}\\
+\ln(1+x)=-\sum\limits_{n=1}^{+\infty}\dfrac{(-1)^{n}x^n}{n}\\
+\exp x=-\sum\limits_{n=0}^{+\infty}\dfrac{x^n}{n!}
+</div>
+<script type="math/tex; mode=display">
+(1-x)^{-1}=\sum\limits_{n=0}^{+\infty}x^n\\
+(1-x)^{-m}=\sum\limits_{n=0}^{+\infty}\binom{n+m-1}{n}x^n\\
+(1+x)^{m}=\sum\limits_{n=0}^{+\infty}\binom{m}{n}x^n\\
+\ln(1-x)=-\sum\limits_{n=1}^{+\infty}\dfrac{x^n}{n}\\
+\ln(1+x)=-\sum\limits_{n=1}^{+\infty}\dfrac{(-1)^{n}x^n}{n}\\
+\exp x=-\sum\limits_{n=0}^{+\infty}\dfrac{x^n}{n!}
+</script>
+</div>
+<details class="note"><summary>泰勒展开式并非总是成立</summary><p>泰勒展开式并非对于 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 定义域内所有 <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 都成立。比如，将 <span><span class="MathJax_Preview">x=10</span><script type="math/tex">x=10</script></span> 代入 <span><span class="MathJax_Preview">(1-x)^{-1}=\sum\limits_{n=0}^{+\infty}x^n</span><script type="math/tex">(1-x)^{-1}=\sum\limits_{n=0}^{+\infty}x^n</script></span>，很容易发现这个式子根本不成立。事实上，<span><span class="MathJax_Preview">(1-x)^{-1}=\sum\limits_{n=0}^{+\infty}x^n</span><script type="math/tex">(1-x)^{-1}=\sum\limits_{n=0}^{+\infty}x^n</script></span> 这个式子只对 <span><span class="MathJax_Preview">|x|&lt;1</span><script type="math/tex">|x|<1</script></span> 成立。</p>
+<p>其他函数的泰勒展开式有的也有类似的限制。但在 OI 中我们只关心展开式的系数，不关心 <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 的值，可以认为这些泰勒展开式在我们研究的范围内总是成立的。</p>
+</details>
+<p>了解了泰勒级数，我们可以开始学习 Newton's Method 了：</p>
+<h2 id="newtons-method_1">一般的 Newton's Method<a class="headerlink" href="#newtons-method_1" title="Permanent link">&para;</a></h2>
+<p>Newton's Method 一般被用于求解非线性方程。它是这样求 <span><span class="MathJax_Preview">f(x)=0</span><script type="math/tex">f(x)=0</script></span> 的根的：</p>
+<ul>
+<li>选取合适一个数作为 <span><span class="MathJax_Preview">x_0</span><script type="math/tex">x_0</script></span></li>
+<li>将 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 在 <span><span class="MathJax_Preview">x_0</span><script type="math/tex">x_0</script></span> 处展开，即 <span><span class="MathJax_Preview">f(x)=\sum\limits_{n=0}^{+\infty}\dfrac{f ^ {(n)}(x_0)} {n!}(x-x_0)^n</span><script type="math/tex">f(x)=\sum\limits_{n=0}^{+\infty}\dfrac{f ^ {(n)}(x_0)} {n!}(x-x_0)^n</script></span></li>
+<li>取其常数项和线性项的系数，令其值为 <span><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span>，即 <span><span class="MathJax_Preview">f(x_0)+f^\prime(x_0)\cdot(x-x_0)=0</span><script type="math/tex">f(x_0)+f^\prime(x_0)\cdot(x-x_0)=0</script></span></li>
+<li>解得这个近似方程的根 <span><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>，并在 <span><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span> 处将 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 泰勒展开，重复上述过程得到 <span><span class="MathJax_Preview">x_2,x_3,x_4,...</span><script type="math/tex">x_2,x_3,x_4,...</script></span> 可以证明，每一个新解都更加接近 <span><span class="MathJax_Preview">f(x)=0</span><script type="math/tex">f(x)=0</script></span> 的根</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kt">double</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">);</span>
+<span class="kt">double</span> <span class="nf">fd</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">);</span><span class="c1">//fd 是 f 的导数，即 f&#39;</span>
+
+<span class="kt">double</span> <span class="nf">newtonMethod</span><span class="p">(</span><span class="kt">double</span> <span class="n">x0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">){</span> <span class="c1">//d 代表迭代次数</span>
+    <span class="c1">//f(x_0)+fd(x0)*(x-x0)=0 -&gt; x=-f(x0)/fd(x0)+x0</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">d</span><span class="o">--</span><span class="p">)</span> <span class="n">x0</span> <span class="o">=</span> <span class="o">-</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">fd</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">x0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>这样看来，我们只能无限逼近 <span><span class="MathJax_Preview">f(x)=0</span><script type="math/tex">f(x)=0</script></span> 的根，而无法绝对准确地取到根。我们求多项式，是否也无法得到精确的解呢？担心是多余的，我们本来就不需要求“绝对精确”的解，只需要求模意义下的“精确”的解。</p>
+<h2 id="newtons-method-methodology">Newton's Method 在多项式中的 Methodology<a class="headerlink" href="#newtons-method-methodology" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>求一个关于 <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 的多项式 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>，使得对于一给定的关于 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 的函数 <span><span class="MathJax_Preview">g(f(x))</span><script type="math/tex">g(f(x))</script></span>，<span><span class="MathJax_Preview">g(f(x))\equiv 0\pmod {x^n}</span><script type="math/tex">g(f(x))\equiv 0\pmod {x^n}</script></span> 成立。</p>
+</blockquote>
+<p>这是 Newton's Method 求解的问题的通式。对于多项式 <span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span>，求逆时 <span><span class="MathJax_Preview">g(f(x))=h(x)-f^{-1}(x)</span><script type="math/tex">g(f(x))=h(x)-f^{-1}(x)</script></span>，开根时 <span><span class="MathJax_Preview">g(f(x))=h(x)-f^{2}(x)</span><script type="math/tex">g(f(x))=h(x)-f^{2}(x)</script></span>，求指数时 <span><span class="MathJax_Preview">g(f(x))=h(x)-\ln f(x)</span><script type="math/tex">g(f(x))=h(x)-\ln f(x)</script></span>。下面就讲述 Newton's Method 是如何逼近根的：</p>
+<p>选择一个满足 <span><span class="MathJax_Preview">g(f(x))\equiv0\pmod{x^1}</span><script type="math/tex">g(f(x))\equiv0\pmod{x^1}</script></span> 的多项式作为初始根。</p>
+<p>设我们已经求出了模 <span><span class="MathJax_Preview">x^{\lceil\frac{n}{2}\rceil}</span><script type="math/tex">x^{\lceil\frac{n}{2}\rceil}</script></span> 下的根 <span><span class="MathJax_Preview">f_0(x)</span><script type="math/tex">f_0(x)</script></span>，将 <span><span class="MathJax_Preview">g(f(x))</span><script type="math/tex">g(f(x))</script></span> 在 <span><span class="MathJax_Preview">f_0(x)</span><script type="math/tex">f_0(x)</script></span> 处泰勒展开：</p>
+<div>
+<div class="MathJax_Preview">
+g(f(x))\equiv\sum\limits_{i=0}^{+\infty}\dfrac{g ^ {(i)}(f_0(x))} {i!}(f(x)-f_0(x))^i\equiv 0\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+g(f(x))\equiv\sum\limits_{i=0}^{+\infty}\dfrac{g ^ {(i)}(f_0(x))} {i!}(f(x)-f_0(x))^i\equiv 0\pmod{x^n}
+</script>
+</div>
+<p>将 <span><span class="MathJax_Preview">f(x)=f_0(x)+x^{\lceil\frac{n}{2}\rceil}\cdot h(x)</span><script type="math/tex">f(x)=f_0(x)+x^{\lceil\frac{n}{2}\rceil}\cdot h(x)</script></span> 代入</p>
+<div>
+<div class="MathJax_Preview">
+\sum\limits_{i=0}^{+\infty}\dfrac{g ^ {(i)}(f_0(x))} {i!}(f_0(x)+x^{\lceil\frac{n}{2}\rceil}\cdot h(x)-f_0(x))^i\equiv 0\pmod{x^{n}}
+</div>
+<script type="math/tex; mode=display">
+\sum\limits_{i=0}^{+\infty}\dfrac{g ^ {(i)}(f_0(x))} {i!}(f_0(x)+x^{\lceil\frac{n}{2}\rceil}\cdot h(x)-f_0(x))^i\equiv 0\pmod{x^{n}}
+</script>
+</div>
+<p>即</p>
+<div>
+<div class="MathJax_Preview">
+\sum\limits_{i=0}^{+\infty}\dfrac{g ^ {(i)}(f_0(x))} {i!}\cdot x^{i\cdot\lceil\frac{n}{2}\rceil}\cdot h^i(x)\equiv 0\pmod{x^{n}}
+</div>
+<script type="math/tex; mode=display">
+\sum\limits_{i=0}^{+\infty}\dfrac{g ^ {(i)}(f_0(x))} {i!}\cdot x^{i\cdot\lceil\frac{n}{2}\rceil}\cdot h^i(x)\equiv 0\pmod{x^{n}}
+</script>
+</div>
+<p>其中，对于 <span><span class="MathJax_Preview">x^{i\cdot\lceil\frac{n}{2}\rceil}\cdot h^i(x)</span><script type="math/tex">x^{i\cdot\lceil\frac{n}{2}\rceil}\cdot h^i(x)</script></span> 这一部分，显然当 <span><span class="MathJax_Preview">i\ge 2</span><script type="math/tex">i\ge 2</script></span> 时有 <span><span class="MathJax_Preview">x^{i\cdot\lceil\frac{n}{2}\rceil}\cdot h^i(x)\equiv 0\pmod{x^n}</span><script type="math/tex">x^{i\cdot\lceil\frac{n}{2}\rceil}\cdot h^i(x)\equiv 0\pmod{x^n}</script></span>。则在此处模 <span><span class="MathJax_Preview">x^n</span><script type="math/tex">x^n</script></span> 意义下的泰勒级数，从第三项开始全部为 <span><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span>，于是只需保留前两项：</p>
+<div>
+<div class="MathJax_Preview">
+g(f_0(x))+g^\prime(f_0(x))\cdot (x^{\lceil\frac{n}{2}\rceil}\cdot h(x))\equiv 0\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+g(f_0(x))+g^\prime(f_0(x))\cdot (x^{\lceil\frac{n}{2}\rceil}\cdot h(x))\equiv 0\pmod{x^n}
+</script>
+</div>
+<p>解得</p>
+<div>
+<div class="MathJax_Preview">
+h(x)\equiv -x^{-\lceil\frac{n}{2}\rceil}\dfrac{g(f_0(x))}{g^\prime(f_0(x))}\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+h(x)\equiv -x^{-\lceil\frac{n}{2}\rceil}\dfrac{g(f_0(x))}{g^\prime(f_0(x))}\pmod{x^n}
+</script>
+</div>
+<p>在 <span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span> 存在的情况下回代得 <span><span class="MathJax_Preview">f(x)\equiv f_0(x)-\dfrac{g(f_0(x))}{g^\prime(f_0(x))}\pmod{x^n}</span><script type="math/tex">f(x)\equiv f_0(x)-\dfrac{g(f_0(x))}{g^\prime(f_0(x))}\pmod{x^n}</script></span>，完成了一次迭代。如果迭代 <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> 次，我们就可以得到在模 <span><span class="MathJax_Preview">x^{2^a}</span><script type="math/tex">x^{2^a}</script></span> 意义下的解了。</p>
+<p>有一个问题尚未解决：<span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span> 是否总是存在？我们发现，<span><span class="MathJax_Preview">-x^{-\lceil\frac{n}{2}\rceil}\dfrac{g(f_0(x))}{g^\prime(f_0(x))}</span><script type="math/tex">-x^{-\lceil\frac{n}{2}\rceil}\dfrac{g(f_0(x))}{g^\prime(f_0(x))}</script></span> 在模 <span><span class="MathJax_Preview">x^n</span><script type="math/tex">x^n</script></span> 意义下存在，当且仅当它只包含 <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 的自然数幂次项，而 <span><span class="MathJax_Preview">g(f_0(x))\equiv 0\pmod{x^{\lceil\frac{n}{2}\rceil}}</span><script type="math/tex">g(f_0(x))\equiv 0\pmod{x^{\lceil\frac{n}{2}\rceil}}</script></span>，于是在模 <span><span class="MathJax_Preview">x^n</span><script type="math/tex">x^n</script></span> 意义下的 <span><span class="MathJax_Preview">\dfrac{g(f_0(x))}{g^\prime(f_0(x))}</span><script type="math/tex">\dfrac{g(f_0(x))}{g^\prime(f_0(x))}</script></span> 总是存在，且其前 <span><span class="MathJax_Preview">\lceil\frac{n}{2}\rceil</span><script type="math/tex">\lceil\frac{n}{2}\rceil</script></span> 总是为零。于是 <span><span class="MathJax_Preview">-x^{-\lceil\frac{n}{2}\rceil}\dfrac{g(f_0(x))}{g^\prime(f_0(x))}</span><script type="math/tex">-x^{-\lceil\frac{n}{2}\rceil}\dfrac{g(f_0(x))}{g^\prime(f_0(x))}</script></span> 总是一个只包含 <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 的自然数幂的式子，<span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span> 总是存在。</p>
+<p>由上述过程可知，Newton's Method 可应用于解 <span><span class="MathJax_Preview">g(f(x))=0</span><script type="math/tex">g(f(x))=0</script></span> 模 <span><span class="MathJax_Preview">x^n</span><script type="math/tex">x^n</script></span> 意义下的根，当且仅当 <span><span class="MathJax_Preview">g(f(x))</span><script type="math/tex">g(f(x))</script></span> 无限可微。<span><span class="MathJax_Preview">g(f(x))\equiv0\pmod{x^n}</span><script type="math/tex">g(f(x))\equiv0\pmod{x^n}</script></span> 的根存在，当且仅当这个同余方程在模 <span><span class="MathJax_Preview">x^1</span><script type="math/tex">x^1</script></span> 意义下的根 <span><span class="MathJax_Preview">f_0</span><script type="math/tex">f_0</script></span> 存在，并且每个 <span><span class="MathJax_Preview">f_0</span><script type="math/tex">f_0</script></span> 都对应着唯一的一个模 <span><span class="MathJax_Preview">x^n</span><script type="math/tex">x^n</script></span> 的根。除此之外，对于第 <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> 次和第 <span><span class="MathJax_Preview">a+1</span><script type="math/tex">a+1</script></span> 次迭代的根 <span><span class="MathJax_Preview">f_{a}(x),f_{a+1}(x)</span><script type="math/tex">f_{a}(x),f_{a+1}(x)</script></span>，有 <span><span class="MathJax_Preview">f_a(x)\equiv f_{a+1}(x)\pmod{x^{2^a}}</span><script type="math/tex">f_a(x)\equiv f_{a+1}(x)\pmod{x^{2^a}}</script></span>。</p>
+<p>下面将就几个具体的 <span><span class="MathJax_Preview">g(f(x))</span><script type="math/tex">g(f(x))</script></span> 讲解 Newton's Method 的应用。</p>
+<h2 id="newtons-method_2">Newton's Method 求多项式的逆<a class="headerlink" href="#newtons-method_2" title="Permanent link">&para;</a></h2>
+<p>对于原多项式 <span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span>，它在模 <span><span class="MathJax_Preview">x^n</span><script type="math/tex">x^n</script></span> 意义下的逆 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 满足 <span><span class="MathJax_Preview">h(x)\cdot g(x)\equiv0\pmod{x^n}</span><script type="math/tex">h(x)\cdot g(x)\equiv0\pmod{x^n}</script></span>。则 <span><span class="MathJax_Preview">g(f(x))</span><script type="math/tex">g(f(x))</script></span> 可以写作 <span><span class="MathJax_Preview">g(f(x))=h(x)-\dfrac{1}{f(x)}</span><script type="math/tex">g(f(x))=h(x)-\dfrac{1}{f(x)}</script></span>。代入 Newton's Method 得</p>
+<div>
+<div class="MathJax_Preview">
+f(x)\equiv f_0(x)-\dfrac{h(x)-\dfrac{1}{f_0(x)}}{f_0^{-2}(x)}\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+f(x)\equiv f_0(x)-\dfrac{h(x)-\dfrac{1}{f_0(x)}}{f_0^{-2}(x)}\pmod{x^n}
+</script>
+</div>
+<p>注意这里 <span><span class="MathJax_Preview">g(f(x))</span><script type="math/tex">g(f(x))</script></span> 不是关于 <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 的复合函数，而是一个关于 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 的函数。它的导数要视作 <span><span class="MathJax_Preview">\dfrac{\mathrm{d}g(f(x))}{\mathrm{d}f(x)}</span><script type="math/tex">\dfrac{\mathrm{d}g(f(x))}{\mathrm{d}f(x)}</script></span>。</p>
+<p>即</p>
+<div>
+<div class="MathJax_Preview">
+f(x)\equiv f_0(x)\cdot\left(2-f_0(x)\cdot h(x)\right)\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+f(x)\equiv f_0(x)\cdot\left(2-f_0(x)\cdot h(x)\right)\pmod{x^n}
+</script>
+</div>
+<p>运用 FNTT，单次迭代复杂度为 <span><span class="MathJax_Preview">O(n\log n)</span><script type="math/tex">O(n\log n)</script></span>。运用主定理可得总时间复杂度为 <span><span class="MathJax_Preview">T(n)=T\left(\dfrac{n}{2}\right)+O(n\log n)=O(n\log n)</span><script type="math/tex">T(n)=T\left(\dfrac{n}{2}\right)+O(n\log n)=O(n\log n)</script></span>。我们一般用倍增法实现代码。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">polyinv</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">f</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">while</span><span class="p">(</span><span class="n">N</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">N</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">d</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">memset</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">memset</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">qpow</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mod</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">w</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">?</span> <span class="nl">w</span> <span class="p">:</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">dft</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dft</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="n">mod</span><span class="p">)</span> <span class="o">%</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="n">dft</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inv</span> <span class="o">=</span> <span class="n">qpow</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mod</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">inv</span> <span class="o">%</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="newtons-method_3">Newton's Method 求多项式平方根<a class="headerlink" href="#newtons-method_3" title="Permanent link">&para;</a></h2>
+<p>对于多项式 <span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span>，它的平方根 <span><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 满足 <span><span class="MathJax_Preview">f^2(x)\equiv h(x)\pmod{x^n}</span><script type="math/tex">f^2(x)\equiv h(x)\pmod{x^n}</script></span>，我们可以写出 <span><span class="MathJax_Preview">g(f(x))\equiv h(x)-f^2(x)\pmod{x^n}</span><script type="math/tex">g(f(x))\equiv h(x)-f^2(x)\pmod{x^n}</script></span>。代入 Newton's Method 得</p>
+<div>
+<div class="MathJax_Preview">
+\begin{aligned}
+f(x)&amp;\equiv f_0(x)-\dfrac{h(x)-f_0^2(x)}{-2f_0(x)}\\
+&amp;\equiv f_0(x)+\dfrac{1}{2}\left(h(x)\cdot f_0^{-1}(x)-f_0(x)\right)\\
+&amp;\equiv \dfrac{1}{2}\left(f_0(x)+f_0^{-1}(x)\cdot h(x)\right)
+\end{aligned}\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(x)&\equiv f_0(x)-\dfrac{h(x)-f_0^2(x)}{-2f_0(x)}\\
+&\equiv f_0(x)+\dfrac{1}{2}\left(h(x)\cdot f_0^{-1}(x)-f_0(x)\right)\\
+&\equiv \dfrac{1}{2}\left(f_0(x)+f_0^{-1}(x)\cdot h(x)\right)
+\end{aligned}\pmod{x^n}
+</script>
+</div>
+<p>单次迭代仍为 <span><span class="MathJax_Preview">O(n\log n)</span><script type="math/tex">O(n\log n)</script></span>，故总复杂度也为 <span><span class="MathJax_Preview">O(n\log n)</span><script type="math/tex">O(n\log n)</script></span>。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">polysqrt</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">f</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">while</span><span class="p">(</span><span class="n">N</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">N</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">d</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">f_inv</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">memset</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">memset</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">w</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">polyinv</span><span class="p">(</span><span class="n">f_inv</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">w</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">?</span> <span class="nl">w</span> <span class="p">:</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">dft</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dft</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dft</span><span class="p">(</span><span class="n">f_inv</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="n">mod</span><span class="p">)</span> <span class="o">%</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="n">dft</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inv</span> <span class="o">=</span> <span class="n">qpow</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mod</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">inv</span> <span class="o">%</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="newtons-method_4">Newton's Method 求多项式指数函数<a class="headerlink" href="#newtons-method_4" title="Permanent link">&para;</a></h2>
+<p>多项式的对数函数和指数函数都是用麦克劳林级数定义的。要用 Newton's Method 求多项式指数函数，得先会求 <a href="https://www.feiko.me/note/polylog">多项式对数函数</a>。</p>
+<p>对于多项式 <span><span class="MathJax_Preview">h(x)</span><script type="math/tex">h(x)</script></span>，它的指数函数 <span><span class="MathJax_Preview">f(x)\equiv\exp h(x)\pmod{x^n}</span><script type="math/tex">f(x)\equiv\exp h(x)\pmod{x^n}</script></span> 满足 <span><span class="MathJax_Preview">h(x)\equiv\ln f(x)\pmod{x^n}</span><script type="math/tex">h(x)\equiv\ln f(x)\pmod{x^n}</script></span>，我们可以写出 <span><span class="MathJax_Preview">g(f(x))=h(x)-\ln f(x)</span><script type="math/tex">g(f(x))=h(x)-\ln f(x)</script></span>。代入 Newton's Method 得</p>
+<div>
+<div class="MathJax_Preview">
+\begin{aligned}
+f(x)&amp;\equiv f_0(x)-\dfrac{h(x)-\ln f_0(x)}{-\dfrac{1}{f_0(x)}}\\
+&amp;\equiv f_0(x)+f_0(x)\cdot\left(h(x)-\ln f_0(x)\right)\\
+&amp;\equiv f_0(x)\cdot(1+h(x)-\ln f_0(x))
+\end{aligned}\pmod{x^n}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(x)&\equiv f_0(x)-\dfrac{h(x)-\ln f_0(x)}{-\dfrac{1}{f_0(x)}}\\
+&\equiv f_0(x)+f_0(x)\cdot\left(h(x)-\ln f_0(x)\right)\\
+&\equiv f_0(x)\cdot(1+h(x)-\ln f_0(x))
+\end{aligned}\pmod{x^n}
+</script>
+</div>
+<p>单次迭代仍为 <span><span class="MathJax_Preview">O(n\log n)</span><script type="math/tex">O(n\log n)</script></span>，故总复杂度也为 <span><span class="MathJax_Preview">O(n\log n)</span><script type="math/tex">O(n\log n)</script></span>。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">polyexp</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">f</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">while</span><span class="p">(</span><span class="n">N</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">N</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">d</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">lg</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span> <span class="n">memset</span><span class="p">(</span><span class="n">lg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">memset</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">memset</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">w</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)),</span> <span class="n">polylog</span><span class="p">(</span><span class="n">lg</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">w</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">?</span> <span class="nl">w</span> <span class="p">:</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">dft</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dft</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dft</span><span class="p">(</span><span class="n">lg</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">lg</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="n">dft</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inv</span> <span class="o">=</span> <span class="n">qpow</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mod</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">inv</span> <span class="o">%</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>一个有趣的事实是，要写多项式指数函数就必须先写一个多项式对数函数；要写多项式对数函数就必须先写一个多项式求逆......这些东西加起来有七八十行，说实话还是不太好写的。</p>
+                
+                  
+                
+              
+              
+                <h2 id="__comments">评论</h2>
+<form id="gitalk-form" onsubmit="return false;">
+    <div id="gitalk-container"></div>
+</form>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '5a4bd1c12b3d61cf065e', // add yourself's
+        clientSecret: 'b60370ac10b6cb6e08353740eb1276f59ff24330', // add yourself's
+        repo: 'feitalk',
+        owner: 'FKazami',
+        admin: ['FKazami'],
+        id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../polyinv/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              多项式的逆
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../arbitrary_modulo/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              任意模数多项式乘法
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ca5457b8.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

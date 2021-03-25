@@ -1,0 +1,1845 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.3">
+    
+    
+      
+        <title>任意模数多项式乘法 - 非的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1655a90d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="indigo">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="非的博客" class="md-header__button md-logo" aria-label="非的博客">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            非的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              任意模数多项式乘法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        主页
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../problem/atcoder/arc114/d/" class="md-tabs__link">
+        做题记录
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../thought/dogma/" class="md-tabs__link">
+        随记
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../travel/csp2020/" class="md-tabs__link">
+        游记
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../templateset/" class="md-tabs__link">
+        模板
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../discrete_mathematics/stirling/" class="md-tabs__link">
+        离散数学
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../linear_algebra/det/" class="md-tabs__link">
+        线性代数
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../generating_function/" class="md-tabs__link md-tabs__link--active">
+        多项式和生成函数
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../graph/dsu_on_tree/" class="md-tabs__link">
+        图论
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../number_theory/euler/" class="md-tabs__link">
+        数论
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../data_structure/binary_lift_BIT/" class="md-tabs__link">
+        数据结构
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../string/lyndon/" class="md-tabs__link">
+        字符串
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="非的博客" class="md-nav__button md-logo" aria-label="非的博客">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    非的博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        主页
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="主页" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          主页
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        欢迎
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../update/" class="md-nav__link">
+        更新
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        做题记录
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="做题记录" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          做题记录
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      <label class="md-nav__link" for="__nav_2_1">
+        专项练习
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="专项练习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          专项练习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_1" type="checkbox" id="__nav_2_1_1" >
+      
+      <label class="md-nav__link" for="__nav_2_1_1">
+        ARC.114
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ARC.114" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          ARC.114
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc114/d/" class="md-nav__link">
+        D - Moving Pieces on Line
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc114/e/" class="md-nav__link">
+        E - Paper Cutting 2
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc114/f/" class="md-nav__link">
+        F - Permutation Division
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_2" type="checkbox" id="__nav_2_1_2" >
+      
+      <label class="md-nav__link" for="__nav_2_1_2">
+        ARC.115
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ARC.115" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          ARC.115
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/a/" class="md-nav__link">
+        A - Two Choices
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/b/" class="md-nav__link">
+        B - Plus Matrix
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/c/" class="md-nav__link">
+        C - N Coloring
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/d/" class="md-nav__link">
+        D - Odd Degree
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/e/" class="md-nav__link">
+        E - LEQ and NEQ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/atcoder/arc115/f/" class="md-nav__link">
+        F - Migration
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      <label class="md-nav__link" for="__nav_2_2">
+        常规练习
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="常规练习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          常规练习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" type="checkbox" id="__nav_2_2_1" >
+      
+      <label class="md-nav__link" for="__nav_2_2_1">
+        March.2021
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="March.2021" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          March.2021
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj32/" class="md-nav__link">
+        跳蚤公路
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj33/" class="md-nav__link">
+        树上 GCD
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj429/" class="md-nav__link">
+        串串划分
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/uoj596/" class="md-nav__link">
+        三维立体混元劲
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2242/" class="md-nav__link">
+        异或
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2007/" class="md-nav__link">
+        Light
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/bzoj1471/" class="md-nav__link">
+        不相交路径
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/bzoj3201/" class="md-nav__link">
+        战斗力
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/tc13460/" class="md-nav__link">
+        Frozen Standing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2010/" class="md-nav__link">
+        黑白沙漠
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2011/" class="md-nav__link">
+        荒野聚餐
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2013/" class="md-nav__link">
+        锁
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2017/" class="md-nav__link">
+        装备合成
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2016/" class="md-nav__link">
+        黑心工厂
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2245/" class="md-nav__link">
+        Company
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2030/" class="md-nav__link">
+        数学题
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../problem/2021/march/noi2034/" class="md-nav__link">
+        歪比歪比
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        随记
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="随记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          随记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thought/dogma/" class="md-nav__link">
+        我的代码规范
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thought/trit/" class="md-nav__link">
+        三分法的适用范围
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        游记
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="游记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          游记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../travel/csp2020/" class="md-nav__link">
+        CSP2020 爆零记
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../travel/noip2020/" class="md-nav__link">
+        NOIP2020 爆炸记
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../travel/wc2021/" class="md-nav__link">
+        WC2021 打铁记
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        模板
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="模板" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          模板
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templateset/" class="md-nav__link">
+        模板大全
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templateset/string/" class="md-nav__link">
+        字符串
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        离散数学
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="离散数学" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          离散数学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../discrete_mathematics/stirling/" class="md-nav__link">
+        斯特林数与上升幂、下降幂
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        线性代数
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="线性代数" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          线性代数
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linear_algebra/det/" class="md-nav__link">
+        关于行列式计算的详细证明
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linear_algebra/cross_product/" class="md-nav__link">
+        浅谈向量积
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+      
+      <label class="md-nav__link" for="__nav_8">
+        多项式和生成函数
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="多项式和生成函数" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          多项式和生成函数
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generating_function/" class="md-nav__link">
+        简单介绍生成函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../polylog/" class="md-nav__link">
+        多项式对数函数、指数函数和欧拉变换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../polyinv/" class="md-nav__link">
+        多项式的逆
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newtons_method/" class="md-nav__link">
+        多项式中的 Newton's Method
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          任意模数多项式乘法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        任意模数多项式乘法
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fft" class="md-nav__link">
+    拆系数 FFT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    优化
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
+        图论
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="图论" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          图论
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/dsu_on_tree/" class="md-nav__link">
+        静态链分治和树上启发式合并
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      <label class="md-nav__link" for="__nav_10">
+        数论
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="数论" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          数论
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../number_theory/euler/" class="md-nav__link">
+        欧拉函数和欧拉定理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../number_theory/number_theoretic_function/" class="md-nav__link">
+        一些数论函数及其运算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../number_theory/exgcd/" class="md-nav__link">
+        扩展欧几里得算法得出的解的绝对值上界
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      <label class="md-nav__link" for="__nav_11">
+        数据结构
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="数据结构" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_structure/binary_lift_BIT/" class="md-nav__link">
+        树状数组倍增
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_structure/sgt_merge/" class="md-nav__link">
+        线段树合并
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      <label class="md-nav__link" for="__nav_12">
+        字符串
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="字符串" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          字符串
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../string/lyndon/" class="md-nav__link">
+        Lyndon 串和 Lyndon 分解
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fft" class="md-nav__link">
+    拆系数 FFT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    优化
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="_1">任意模数多项式乘法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>由于 NTT 的数学原理，它只能用于计算模特定模数意义下的多项式乘法。如何计算任意模数的多项式乘法呢？</p>
+<p>一种简单的想法是利用中国剩余定理。一般我们计算两个长度在 <span><span class="MathJax_Preview">10^5</span><script type="math/tex">10^5</script></span> 级别、系数在 <span><span class="MathJax_Preview">10^9</span><script type="math/tex">10^9</script></span> 级别的多项式的卷积，其结果的系数不会超过 <span><span class="MathJax_Preview">10^{23}</span><script type="math/tex">10^{23}</script></span> 级别。只要选取三个乘积超过 <span><span class="MathJax_Preview">10^{23}</span><script type="math/tex">10^{23}</script></span> 的 NTT 模数，分别乘一次，再用中国剩余定理合并答案即可。这种方法常数极大。</p>
+<p>而我们要介绍的做法是拆系数 FFT。合理的拆系数 FFT 实现消耗的时间仅仅是普通多项式乘法的四倍左右，是一种很优秀的任意模数多项式乘法计算方法。</p>
+<h2 id="fft">拆系数 FFT<a class="headerlink" href="#fft" title="Permanent link">&para;</a></h2>
+<p>假定我们卷积的模数为 <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>，选取一个 <span><span class="MathJax_Preview">\sqrt{p}</span><script type="math/tex">\sqrt{p}</script></span> 级别的数 <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>。在 OI 中，<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 一般至多为 <span><span class="MathJax_Preview">2^{30}</span><script type="math/tex">2^{30}</script></span> 级别的数。</p>
+<p>把多项式 <span><span class="MathJax_Preview">F</span><script type="math/tex">F</script></span> 每一项的系数 <span><span class="MathJax_Preview">F_i</span><script type="math/tex">F_i</script></span> 分解为 <span><span class="MathJax_Preview">F_i=d\cdot G_i+H_i</span><script type="math/tex">F_i=d\cdot G_i+H_i</script></span>，得到 <span><span class="MathJax_Preview">F=d\cdot G+H</span><script type="math/tex">F=d\cdot G+H</script></span>。由于 <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> 是 <span><span class="MathJax_Preview">\sqrt{p}</span><script type="math/tex">\sqrt{p}</script></span> 级别的，我们可以保证 <span><span class="MathJax_Preview">G</span><script type="math/tex">G</script></span> 和 <span><span class="MathJax_Preview">H</span><script type="math/tex">H</script></span> 的系数也是 <span><span class="MathJax_Preview">\sqrt{p}</span><script type="math/tex">\sqrt{p}</script></span> 级别的，相乘不会超过 <code>double</code> 的精度。</p>
+<p>于是</p>
+<div>
+<div class="MathJax_Preview">
+\begin{aligned}F\cdot G&amp;=\left(d\cdot A+B\right)\cdot\left(d\cdot C+D\right)\\&amp;=d^2\cdot AC+d\cdot(AD+BC)+BD\end{aligned}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}F\cdot G&=\left(d\cdot A+B\right)\cdot\left(d\cdot C+D\right)\\&=d^2\cdot AC+d\cdot(AD+BC)+BD\end{aligned}
+</script>
+</div>
+<p>使用“三次变两次”的思想优化，可以在七次 DFT 变换内得到结果 <span><span class="MathJax_Preview">F\cdot G</span><script type="math/tex">F\cdot G</script></span>。这就是拆系数 FFT 了。</p>
+<h2 id="_2">优化<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>根据国家集训队论文《再谈快速傅里叶变换》，存在一种四次 DFT 计算任意模数卷积的算法。</p>
+<p>设 <span><span class="MathJax_Preview">F=G+i\cdot H</span><script type="math/tex">F=G+i\cdot H</script></span>，对于 FFT 选取的每一个点 <span><span class="MathJax_Preview">\left(\omega_n^k,F\left(\omega_n^k\right)\right)</span><script type="math/tex">\left(\omega_n^k,F\left(\omega_n^k\right)\right)</script></span>，都有</p>
+<div>
+<div class="MathJax_Preview">
+\begin{aligned}F\left(\omega_n^k\right)&amp;= G\left(\omega_n^k\right)+i\cdot H\left(\omega_n^k\right)\\&amp;=\sum\limits_{j=0}^{n-1}\left(G_j\cdot\omega_n^{jk}+i\cdot H_j\cdot\omega_n^{jk}\right)\\&amp;=\sum\limits_{j=0}^{n-1}\omega_{n}^{jk}\cdot\left(G_j+i\cdot H_j\right)\\&amp;=\sum\limits_{j=0}^{n-1}\left(\cos\dfrac{kj\cdot 2\pi}{n}+i\cdot\sin\dfrac{kj\cdot 2\pi}{n}\right)\cdot\left(G_j+i\cdot H_j\right)\end{aligned}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}F\left(\omega_n^k\right)&= G\left(\omega_n^k\right)+i\cdot H\left(\omega_n^k\right)\\&=\sum\limits_{j=0}^{n-1}\left(G_j\cdot\omega_n^{jk}+i\cdot H_j\cdot\omega_n^{jk}\right)\\&=\sum\limits_{j=0}^{n-1}\omega_{n}^{jk}\cdot\left(G_j+i\cdot H_j\right)\\&=\sum\limits_{j=0}^{n-1}\left(\cos\dfrac{kj\cdot 2\pi}{n}+i\cdot\sin\dfrac{kj\cdot 2\pi}{n}\right)\cdot\left(G_j+i\cdot H_j\right)\end{aligned}
+</script>
+</div>
+<p>再设 <span><span class="MathJax_Preview">\overline{F}=G-i\cdot H</span><script type="math/tex">\overline{F}=G-i\cdot H</script></span>，我们有</p>
+<div>
+<div class="MathJax_Preview">
+\begin{aligned}\overline{F}\left(\omega_n^k\right)&amp;=\sum\limits_{j=0}^{n-1}\left(\cos\dfrac{kj\cdot 2\pi}{n}+i\cdot\sin\dfrac{kj\cdot 2\pi}{n}\right)\cdot\left(G_j-i\cdot H_j\right)\\&amp;=\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\dfrac{kj\cdot 2\pi}{n}+H_j\cdot\sin\dfrac{kj\cdot 2\pi}{n}\right)+i\cdot\left(G_j\cdot\sin\dfrac{kj\cdot 2\pi}{n}-H_j\cdot\cos\dfrac{kj\cdot 2\pi}{n}\right)\right)\\&amp;=\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\left(-\dfrac{kj\cdot 2\pi}{n}\right)-H_j\cdot\sin\left(-\dfrac{kj\cdot 2\pi}{n}\right)\right)-i\cdot\left(G_j\cdot\sin\left(-\dfrac{kj\cdot 2\pi}{n}\right)+H_j\cdot\cos\left(-\dfrac{kj\cdot 2\pi}{n}\right)\right)\right)\\&amp;=\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}-H_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}\right)-i\cdot\left(G_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}+H_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}\right)\right)\\&amp;=\overline{\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}-H_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}\right)+i\cdot\left(G_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}+H_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}\right)\right)}\\&amp;=\overline{\sum\limits_{j=0}^{n-1}\left(\cos\dfrac{(nj-kj)\cdot 2\pi}{n}+i\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}\right)\cdot\left(G_j+i\cdot H_j\right)}\\&amp;=\overline{G\left(\omega_n^{n-k}\right)+i\cdot H\left(\omega_n^{n-k}\right)}\\&amp;=\overline{F\left(\omega_n^{n-k}\right)}\end{aligned}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}\overline{F}\left(\omega_n^k\right)&=\sum\limits_{j=0}^{n-1}\left(\cos\dfrac{kj\cdot 2\pi}{n}+i\cdot\sin\dfrac{kj\cdot 2\pi}{n}\right)\cdot\left(G_j-i\cdot H_j\right)\\&=\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\dfrac{kj\cdot 2\pi}{n}+H_j\cdot\sin\dfrac{kj\cdot 2\pi}{n}\right)+i\cdot\left(G_j\cdot\sin\dfrac{kj\cdot 2\pi}{n}-H_j\cdot\cos\dfrac{kj\cdot 2\pi}{n}\right)\right)\\&=\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\left(-\dfrac{kj\cdot 2\pi}{n}\right)-H_j\cdot\sin\left(-\dfrac{kj\cdot 2\pi}{n}\right)\right)-i\cdot\left(G_j\cdot\sin\left(-\dfrac{kj\cdot 2\pi}{n}\right)+H_j\cdot\cos\left(-\dfrac{kj\cdot 2\pi}{n}\right)\right)\right)\\&=\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}-H_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}\right)-i\cdot\left(G_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}+H_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}\right)\right)\\&=\overline{\sum\limits_{j=0}^{n-1}\left(\left(G_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}-H_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}\right)+i\cdot\left(G_j\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}+H_j\cdot\cos\dfrac{(nj-kj)\cdot 2\pi}{n}\right)\right)}\\&=\overline{\sum\limits_{j=0}^{n-1}\left(\cos\dfrac{(nj-kj)\cdot 2\pi}{n}+i\cdot\sin\dfrac{(nj-kj)\cdot 2\pi}{n}\right)\cdot\left(G_j+i\cdot H_j\right)}\\&=\overline{G\left(\omega_n^{n-k}\right)+i\cdot H\left(\omega_n^{n-k}\right)}\\&=\overline{F\left(\omega_n^{n-k}\right)}\end{aligned}
+</script>
+</div>
+<p>因此，只要求出 <span><span class="MathJax_Preview">F</span><script type="math/tex">F</script></span> 的点值，就可 <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span> 地推出 <span><span class="MathJax_Preview">\overline{F}</span><script type="math/tex">\overline{F}</script></span> 的点值，解出 <span><span class="MathJax_Preview">G,H</span><script type="math/tex">G,H</script></span> 的点值。即</p>
+<div>
+<div class="MathJax_Preview">
+\text{DFT}(G)=\dfrac{\text{DFT}(F)+\text{DFT}(\overline{F})}{2}\\\text{DFT}(H)=\dfrac{\text{DFT}(F)-\text{DFT}(\overline{F})}{2i}
+</div>
+<script type="math/tex; mode=display">
+\text{DFT}(G)=\dfrac{\text{DFT}(F)+\text{DFT}(\overline{F})}{2}\\\text{DFT}(H)=\dfrac{\text{DFT}(F)-\text{DFT}(\overline{F})}{2i}
+</script>
+</div>
+<p>这样，一共只需要两次 DFT 就可以得到四个多项式的点值。</p>
+<p>还原系数表达（IDFT）时，也可以用“三次变两次”的思想，将两个多项式分虚实放在一起 IDFT，做到两次 IDFT 还原。</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;complex&gt;</span><span class="cp"></span>
+
+<span class="cp">#define double long double</span>
+
+<span class="k">const</span> <span class="kt">double</span> <span class="n">PI</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">acos</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="n">__fft</span><span class="p">{</span>
+    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">comp</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">rev</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+        <span class="n">tmp</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">rev</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">|=</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">fft</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]]);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">){</span>
+            <span class="n">comp</span> <span class="n">w</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">PI</span> <span class="o">/</span> <span class="n">i</span><span class="p">),</span> <span class="n">b</span> <span class="o">*</span> <span class="n">std</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">PI</span> <span class="o">/</span> <span class="n">i</span><span class="p">));</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="n">i</span><span class="p">){</span>
+                <span class="n">comp</span> <span class="n">wn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">g</span> <span class="o">=</span> <span class="n">f</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">f</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="n">i</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">){</span>
+                    <span class="n">tmp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">wn</span><span class="p">;</span>
+                    <span class="n">tmp</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="n">i</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">h</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">wn</span><span class="p">;</span>
+                    <span class="n">wn</span> <span class="o">=</span> <span class="n">wn</span> <span class="o">*</span> <span class="n">w</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">)</span> <span class="n">f</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">F</span><span class="p">,</span> <span class="n">G</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">mtt</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">F</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">G</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">){</span>
+    <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
+    <span class="k">using</span> <span class="n">__fft</span><span class="o">::</span><span class="n">comp</span><span class="p">;</span>
+    <span class="n">__fft</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">15</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="n">len</span><span class="p">),</span> <span class="n">B</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;</span> <span class="n">C</span><span class="p">(</span><span class="n">len</span><span class="p">),</span> <span class="n">D</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;</span> <span class="n">H</span><span class="p">(</span><span class="n">len</span><span class="p">),</span> <span class="n">I</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(),</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">());</span>
+    <span class="n">__fft</span><span class="o">::</span><span class="n">fft</span><span class="p">(</span><span class="n">H</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">len</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">conj</span><span class="p">(</span><span class="n">H</span><span class="p">[(</span><span class="n">len</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="n">len</span><span class="p">]);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">comp</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">comp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">-0.5</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(),</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">());</span>
+    <span class="n">__fft</span><span class="o">::</span><span class="n">fft</span><span class="p">(</span><span class="n">H</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">len</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">conj</span><span class="p">(</span><span class="n">H</span><span class="p">[(</span><span class="n">len</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="n">len</span><span class="p">]);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">comp</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">comp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">-0.5</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">comp</span><span class="o">&gt;</span> <span class="n">P</span><span class="p">(</span><span class="n">len</span><span class="p">),</span> <span class="n">Q</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">comp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">__fft</span><span class="o">::</span><span class="n">fft</span><span class="p">(</span><span class="n">P</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">len</span><span class="p">,</span> <span class="mi">-1</span><span class="p">),</span> <span class="n">__fft</span><span class="o">::</span><span class="n">fft</span><span class="p">(</span><span class="n">Q</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">len</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ll</span><span class="p">)(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">()</span> <span class="o">/</span> <span class="n">len</span> <span class="o">+</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span> <span class="o">%</span> <span class="n">p</span> <span class="o">*</span> <span class="n">d</span> <span class="o">%</span> <span class="n">p</span><span class="p">;</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">ll</span><span class="p">)(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">imag</span><span class="p">()</span> <span class="o">/</span> <span class="n">len</span> <span class="o">+</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">;</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">ll</span><span class="p">)(</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">()</span> <span class="o">/</span> <span class="n">len</span> <span class="o">+</span> <span class="mf">0.9</span><span class="p">))</span> <span class="o">%</span> <span class="n">p</span><span class="p">;</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">F</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">);</span>
+    <span class="n">F</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">G</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%=</span> <span class="n">p</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%=</span> <span class="n">p</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">){</span>
+            <span class="n">len</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="n">F</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">len</span><span class="p">),</span> <span class="n">G</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ans</span><span class="p">(</span><span class="n">mtt</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">len</span><span class="p">));</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>以上是我早年间的实现，效率极其低下（<span><span class="MathJax_Preview">10^5</span><script type="math/tex">10^5</script></span> 卷积运算耗时 <span><span class="MathJax_Preview">1109</span><script type="math/tex">1109</script></span> ms）。更好的实现可以参考我的项目 <a href="https://github.com/FKazami/fstdlib">fstdlib</a>。</p>
+<p>拆系数 FFT 是无法通过 <a href="https://judge.yosupo.jp/problem/convolution_mod_1000000007">Library Checker</a> 的，因为 Library Checker 的多项式长度达到了 <span><span class="MathJax_Preview">524288</span><script type="math/tex">524288</script></span>，纵使是 <code>long double</code> 也无法保证精度。正常情况下不会有题目考察规模如此之大的任意模数卷积。</p>
+                
+                  
+                
+              
+              
+                <h2 id="__comments">评论</h2>
+<form id="gitalk-form" onsubmit="return false;">
+    <div id="gitalk-container"></div>
+</form>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '5a4bd1c12b3d61cf065e', // add yourself's
+        clientSecret: 'b60370ac10b6cb6e08353740eb1276f59ff24330', // add yourself's
+        repo: 'feitalk',
+        owner: 'FKazami',
+        admin: ['FKazami'],
+        id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../newtons_method/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              多项式中的 Newton's Method
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../graph/dsu_on_tree/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              静态链分治和树上启发式合并
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ca5457b8.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
