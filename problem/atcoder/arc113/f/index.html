@@ -805,6 +805,18 @@
   
 
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2021/april/uoj574/" class="md-nav__link">
+        多线程计算
+      </a>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -873,6 +885,18 @@
   
 
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agc050/b/" class="md-nav__link">
+        B - Three Coins
+      </a>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -899,6 +923,42 @@
           AtCoder Regular Contest 116
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arc116/a/" class="md-nav__link">
+        A - Odd vs Even
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arc116/b/" class="md-nav__link">
+        B - Products of Min-Max
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arc116/c/" class="md-nav__link">
+        C - Multiple Sequences
+      </a>
+    </li>
+  
+
           
             
   
@@ -1875,7 +1935,7 @@
 <p>これから、<span><span class="MathJax_Preview">1</span><script type="math/tex">1</script></span> から <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> までの番号のついた <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> 人の人が、数直線上に現れます。人 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> は、区間 <span><span class="MathJax_Preview">[X_{i−1},X_i]</span><script type="math/tex">[X_{i−1},X_i]</script></span> の中から一様ランダムに選ばれた実数座標に出現します。</p>
 <p>人と人の距離の最小値の期待値を <span><span class="MathJax_Preview">\bmod 998244353</span><script type="math/tex">\bmod 998244353</script></span> で求めてください。</p>
 <h2 id="_2">解析<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>考虑求出人与人距离的最小值的互补累积分布函数 <span><span class="MathJax_Preview">f(z)</span><script type="math/tex">f(z)</script></span> (即 <span><span class="MathJax_Preview">f(z)</span><script type="math/tex">f(z)</script></span> 表示人与人的距离的最小值大于等于 <span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span> 的概率)，这样我们就可以得到答案为 <span><span class="MathJax_Preview">\displaystyle\int_{0}^{+\infty}f(z)\text{d}z</span><script type="math/tex">\displaystyle\int_{0}^{+\infty}f(z)\text{d}z</script></span>。</p>
+<p>考虑求出人与人距离的最小值的互补累积分布函数 <span><span class="MathJax_Preview">f(z)</span><script type="math/tex">f(z)</script></span> (即 <span><span class="MathJax_Preview">f(z)</span><script type="math/tex">f(z)</script></span> 表示人与人的距离的最小值大于等于 <span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span> 的概率)，这样我们就可以得到答案为 <span><span class="MathJax_Preview">\displaystyle\int_{0}^{+\infty}f(z)\mathrm{d}z</span><script type="math/tex">\displaystyle\int_{0}^{+\infty}f(z)\mathrm{d}z</script></span>。</p>
 <p>先尝试对固定的 <span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span> 求出 <span><span class="MathJax_Preview">f(z)</span><script type="math/tex">f(z)</script></span>。设第 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 个人的位置为 <span><span class="MathJax_Preview">x_i</span><script type="math/tex">x_i</script></span>，则对于固定的 <span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span>，我们需要对 <span><span class="MathJax_Preview">i=1\ldots n-1</span><script type="math/tex">i=1\ldots n-1</script></span> 满足 <span><span class="MathJax_Preview">x_i+z\le x_{i+1}</span><script type="math/tex">x_i+z\le x_{i+1}</script></span>。设 <span><span class="MathJax_Preview">y_i=x_i-iz</span><script type="math/tex">y_i=x_i-iz</script></span>，则我们的要求可以改写为 <span><span class="MathJax_Preview">y_1\le y_2\le\ldots\le y_n</span><script type="math/tex">y_1\le y_2\le\ldots\le y_n</script></span>。于是我们只需求出在 <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> 个区间均匀随机分布的变量 <span><span class="MathJax_Preview">y_i\in[X_{i-1}-iz,X_i-iz]</span><script type="math/tex">y_i\in[X_{i-1}-iz,X_i-iz]</script></span> 满足 <span><span class="MathJax_Preview">y_1\le y_2\le\ldots\le y_n</span><script type="math/tex">y_1\le y_2\le\ldots\le y_n</script></span> 的概率。</p>
 <p>这可以用动态规划 (严格来讲，这不是动态规划，而是递推) 在 <span><span class="MathJax_Preview">O(n^3)</span><script type="math/tex">O(n^3)</script></span> 的时间复杂度内求出。将所有区间 <span><span class="MathJax_Preview">[X_{i-1}-iz,X_i-iz]</span><script type="math/tex">[X_{i-1}-iz,X_i-iz]</script></span> 的左右端点排序，从小到大的第 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 个端点记做 <span><span class="MathJax_Preview">v_i</span><script type="math/tex">v_i</script></span>。设 <span><span class="MathJax_Preview">dp_{i,j}</span><script type="math/tex">dp_{i,j}</script></span> 表示 <span><span class="MathJax_Preview">[v_1,v_i]</span><script type="math/tex">[v_1,v_i]</script></span> 这段区间内分布了 <span><span class="MathJax_Preview">y_1\le y_2\le\ldots\le y_j</span><script type="math/tex">y_1\le y_2\le\ldots\le y_j</script></span> 的概率，我们如下转移：</p>
 <ul>
@@ -2157,7 +2217,7 @@
       
         <script src="../../../../js/extra.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       
     
   </body>
